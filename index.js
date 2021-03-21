@@ -4,19 +4,14 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const campgrounds = require('./router/campgroundsRoutes');
 const reviews = require('./router/reviewsRoutes');
 
-app.engine('ejs', ejsMate);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.urlencoded({extended: true}));
-app.use(methodOverride('_method'));
 
 mongoose.connect('mongodb://localhost:27017/YelpCampV1', { 
-    useNewUrlParser: true, 
+    useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true, 
     useFindAndModify: false })
     .then(() => {
@@ -24,6 +19,15 @@ mongoose.connect('mongodb://localhost:27017/YelpCampV1', {
     }).catch(e => {
         console.log('Error connecting to Mongoose! :::' + e);
 });
+
+
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
+
+app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);

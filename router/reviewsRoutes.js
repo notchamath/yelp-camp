@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const Review = require('../models/review');
 const {joiSchemaReview} = require('../joiSchemas');
 const Campground = require('../models/campgrounds');
+const ExpressError = require('../utils/ExpressError');
 
 
 const validateReview = (req, res, next) => {
