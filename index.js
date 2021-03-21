@@ -4,10 +4,12 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
+
 const campgrounds = require('./router/campgroundsRoutes');
 const reviews = require('./router/reviewsRoutes');
-
 
 mongoose.connect('mongodb://localhost:27017/YelpCampV1', { 
     useNewUrlParser: true,
@@ -20,14 +22,31 @@ mongoose.connect('mongodb://localhost:27017/YelpCampV1', {
         console.log('Error connecting to Mongoose! :::' + e);
 });
 
-
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-app.use(express.static(path.join(__dirname,'public')));
+const sessionConfig = {
+    secret: 'NeedBettersecrets!',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 6.048e+8,
+        maxAge: 6.048e+8
+    }
+}
+app.use(session(sessionConfig));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
