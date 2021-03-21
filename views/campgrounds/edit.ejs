@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <h1 class="text-center">New Campground</h1>
+
+        <div class="col-6 offset-3">
+
+            <form action="/campgrounds/<%=camp.id%>?_method=PUT" method='POST' novalidate class="validated-form">
+                <div class="mb-2">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]" value="<%= camp.title %>" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]" value="<%= camp.location %>" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="img">Image URL</label>
+                    <input class="form-control" type="text" id="img" name="campground[image]" value="<%= camp.image %>" required>
+                </div>
+                <div class="mb-2">
+                    <label for="price">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">$</span>
+                        <input type="text" id="price" class="form-control" placeholder="Price" aria-label="Price" aria-describedby="basic-addon1" name="campground[price]" value="<%= camp.price %>" required>
+                    </div>
+                </div>
+               
+                <div class="mb-2">
+                    <label class="form-label" for="desc">Description</label>
+                    <textarea class="form-control" type="text" id="desc" name="campground[desc]" required><%= camp.desc %></textarea>
+                </div>
+                <button class="btn btn-success mb-4">Update Campground</button>
+            </form> 
+
+            <a href="/campgrounds/<%=camp.id%>">Back to Campground</a>
+        </div>
+    </div>
