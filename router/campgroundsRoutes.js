@@ -40,11 +40,18 @@ router.get('/:id', catchAsync(async (req, res) => {
         req.flash('error', 'Sorry! Cannot find that Campground');
         return res.redirect('/campgrounds');
     }
+
     res.render('campgrounds/show', {camp});
 }));
 
 router.get('/:id/edit', catchAsync(async (req, res) => {
     const camp = await Campground.findById(req.params.id);
+
+    if(!camp){
+        req.flash('error', 'Sorry! Cannot find that Campground');
+        return res.redirect('/campgrounds');
+    }
+    
     res.render('campgrounds/edit', {camp});
 }));
 
