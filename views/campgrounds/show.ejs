@@ -12,15 +12,19 @@
                 <li class="list-group-item"><%= camp.location %></li>
                 <li class="list-group-item">$<%= camp.price %></li>
             </ul>
+
+            <% if(currUser && camp.author.equals(currUser)) { %> 
             <div class="card-body">
                 <a class="card-link btn btn-info" href="/campgrounds/<%=camp.id%>/edit">Edit</a>
                 <form class="d-inline" action="/campgrounds/<%=camp.id%>?_method=DELETE" method='POST'>
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            <% } %> 
 
-            <div class="card-footer text-muted">
-                2 days ago
+            <div class="d-flex card-footer text-muted">
+                <div>2 days ago</div>
+                <div class="ms-auto">submitted by <%= camp.author.username %> </div>                
             </div>
         </div>
     </div>
