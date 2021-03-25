@@ -22,7 +22,9 @@ router.route('/:id')
     .get(catchAsync(campgrounds.show))  
 
     .put(isLoggedIn, 
-        isAuthor, validateCampground, 
+        isAuthor, 
+        upload.array('image'),
+        validateCampground, 
         catchAsync(campgrounds.postEditCamp
     ))
 

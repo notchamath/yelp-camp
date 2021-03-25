@@ -5,7 +5,7 @@
 
         <div class="col-6 offset-3">
 
-            <form action="/campgrounds/<%=camp.id%>?_method=PUT" method='POST' novalidate class="validated-form">
+            <form action="/campgrounds/<%=camp.id%>?_method=PUT" method='POST' novalidate class="validated-form" enctype="multipart/form-data">
                 <div class="mb-2">
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="campground[title]" value="<%= camp.title %>" required>
@@ -14,10 +14,12 @@
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" id="location" name="campground[location]" value="<%= camp.location %>" required>
                 </div>
+
                 <div class="mb-2">
-                    <label class="form-label" for="img">Image URL</label>
-                    <input class="form-control" type="text" id="img" name="campground[image]" value="<%= camp.image %>" required>
+                    <label class="form-label" for="img" >Images</label>
+                    <input type="file" name="image" id="img" multiple>
                 </div>
+
                 <div class="mb-2">
                     <label for="price">Campground Price</label>
                     <div class="input-group">
