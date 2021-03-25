@@ -12,6 +12,11 @@ module.exports.getNewCamp = (req, res) => {
 module.exports.postNewCamp = async (req, res, next) => {
     const camp = new Campground(req.body.campground);
     camp.author = req.user._id;
+    camp.images = req.files.map(f =>({
+        url: f.path,
+        filename: f.filename
+    }));
+    console.log(camp)
     await camp.save();
     
     req.flash('success', 'Created New Campground!');
