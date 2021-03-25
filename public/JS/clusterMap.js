@@ -2,7 +2,7 @@
 mapboxgl.accessToken = mapToken;
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v10',
+    style: 'mapbox://styles/mapbox/light-v10',
     center: [-103.59179687498357, 40.66995747013945],
     zoom: 3
 });
@@ -36,19 +36,17 @@ map.on('load', function () {
                 'step',
                 ['get', 'point_count'],
                 '#51bbd6',
-                100,
+                1000,
                 '#f1f075',
-                750,
+                7500,
                 '#f28cb1'
             ],
             'circle-radius': [
                 'step',
                 ['get', 'point_count'],
-                20,
-                100,
-                30,
-                750,
-                40
+                15,10,
+                20,20,
+                25
             ]
         }
     });
@@ -72,7 +70,7 @@ map.on('load', function () {
         filter: ['!', ['has', 'point_count']],
         paint: {
             'circle-color': '#11b4da',
-            'circle-radius': 4,
+            'circle-radius': 8,
             'circle-stroke-width': 1,
             'circle-stroke-color': '#fff'
         }
@@ -102,15 +100,8 @@ map.on('load', function () {
     // the location of the feature, with
     // description HTML from its properties.
     map.on('click', 'unclustered-point', function (e) {
+        const popUpMarkup = e.features[0].properties.popUpMarkup;
         var coordinates = e.features[0].geometry.coordinates.slice();
-        var mag = e.features[0].properties.mag;
-        var tsunami;
-
-        if (e.features[0].properties.tsunami === 1) {
-            tsunami = 'yes';
-        } else {
-            tsunami = 'no';
-        }
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
@@ -121,9 +112,7 @@ map.on('load', function () {
 
         new mapboxgl.Popup()
             .setLngLat(coordinates)
-            .setHTML(
-                'magnitude: ' + mag + '<br>Was there a tsunami?: ' + tsunami
-            )
+            .setHTML(popUpMarkup)
             .addTo(map);
     });
 
