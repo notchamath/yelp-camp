@@ -1,0 +1,2 @@
+- limit how many pics a campground can hold: client and server side
+- limit the size of the pics users can upload
