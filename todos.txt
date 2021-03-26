@@ -1,2 +1,5 @@
 - limit how many pics a campground can hold: client and server side
 - limit the size of the pics users can upload
+- style show, add posted date, sort reviews, carousel height
+- infinity scroll,
+- express validator instead of Joi
